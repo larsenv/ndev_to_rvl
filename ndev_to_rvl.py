@@ -16,7 +16,7 @@ def wiielffix():
     print("Running WiiElfFix so the .elf can be run through HBC...")
 
     subprocess.call(["cp", sys.argv[1], sys.argv[1][:-4] + "_rvl.elf"])
-    
+
     if platform.system() == "Windows":
         subprocess.call(["WiiElfFix.exe", sys.argv[1]])
     elif platform.system() == "Linux" or platform.system() == "Darwin":
@@ -34,6 +34,9 @@ def error002():
         exit()
 
     read = read.replace(b"\x2C\x00\x00\x00\x40\x82\x01\xD4\x3C\x60\x80\x00",
+                           b"\x2C\x00\x00\x00\x48\x00\x02\x14\x3C\x60\x80\x00")
+
+    read = read.replace(b"\x2C\x00\x00\x00\x40\x82\x02\x14\x3C\x60\x80\x00",
                            b"\x2C\x00\x00\x00\x48\x00\x02\x14\x3C\x60\x80\x00")
 
     with open(sys.argv[1][:-4] + "_rvl.elf", "wb") as dest_file:
